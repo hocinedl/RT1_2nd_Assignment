@@ -15,33 +15,33 @@ tmp = 0
 start = 0
 startingPose = Point()
 
-def DOCallback(msg):
+def callback1(msg):
     global my_msg
     my_msg = msg
-def GoalCallback(msg):
+def callback2(msg):
     global goal,startingPose,start
     goal = msg.goal
     startingPose.x = my_msg.position_x
     startingPose.y = my_msg.position_y
     start = time.perf_counter()
-def SCallback(msg):
+def callback(msg):
     global status,tmp,end,startingPose
     if (len(msg.status_list)>0):
         status= msg.status_list[0].status
     if(status==3):
         if status !=tmp:
             end = time.perf_counter()
-            duration = (end-start)#/1000.0
+            duration = (end-start)
             distanceTraveled = math.sqrt((my_msg.position_x - startingPose.x)**2 + (my_msg.position_y - startingPose.y)**2)
             avgspeed = distanceTraveled/duration
             print("duration is ",duration," distance is ",distanceTraveled," avg speed ",avgspeed)
     tmp = status
 
 def main():
-    rospy.init_node("subscriber_python")
-    odomSub = rospy.Subscriber("/position_and_velocity",my_message,DOCallback,queue_size=1000)
-    goalSub = rospy.Subscriber("/reaching_goal/goal",PlanningActionGoal,GoalCallback,queue_size=1000)
-    statusSub = rospy.Subscriber("/reaching_goal/status",GoalStatusArray,SCallback,queue_size=1000)
+    rospy.init_node("subscriber")
+    odomSub = rospy.Subscriber("/position_and_velocity",my_message,callback1,queue_size=1000)
+    goalSub = rospy.Subscriber("/reaching_goal/goal",PlanningActionGoal,callback2,queue_size=1000)
+    statusSub = rospy.Subscriber("/reaching_goal/status",GoalStatusArray,callback,queue_size=1000)
     rospy.loginfo("starting the loop")
     rospy.spin()
         
