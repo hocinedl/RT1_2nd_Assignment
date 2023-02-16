@@ -74,36 +74,80 @@ The Flowchart of the node is :
 ![Flowchart for node B](Flowchart2.png)
 A result of this node is the following:
 ![Result of running node B](nodeBrun.png)
+This Picture shows the result of running the node and that it returns the value of the reached and canceled goals.
 
-#### The Subscriber node:
+#### The Subscriber node (node_C):
+It is a node that subscribes to the robot’s position and velocity using the custom message and prints the
+distance of the robot from the target and the robot’s average speed after reaching the goal. 
 
 ``` 
-define a function to calculate the distance between two points
-    distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
-    return distance
+from __future__ import print_function
+import rospy,math,time
 
-define a function to calculate the average speed of the robot
-    average_speed = (total_distance / total_time)
-    return average_speed
+from assignment_2_2022.msg import PlanningActionGoal,PlanningGoal
+from actionlib_msgs.msg import GoalStatusArray
+from assignmentPackage.msg import my_msg as my_message
+from geometry_msgs.msg import Point
 
-define a callback function to handle incoming messages
-    extract robot's position and velocity from the message
-    calculate the distance from the target using the defined function
-    update total_distance and total_time for calculating average speed
-    if time since last publishing information >= frequency parameter
-        calculate average speed using the defined function
-        print distance from target and average speed
-        update last_publish_time
+goal = PlanningGoal()
+my_msg = my_message()
+status = 0
+tmp = 0
+start = 0
+startingPose = Point()
 
-initialize the node
-initialize a subscriber to the custom message topic with the callback function
+def callback1(msg):
+    global my_msg
+    my_msg = msg
+def callback2(msg):
+    global goal,startingPose,start
+    goal = msg.goal
+    startingPose.x = my_msg.position_x
+    startingPose.y = my_msg.position_y
+    start = time.perf_counter()
+def callback(msg):
+    global status,tmp,end,startingPose
+    if (len(msg.status_list)>0):
+        status= msg.status_list[0].status
+    if(status==3):
+        if status !=tmp:
+            end = time.perf_counter()
+            duration = (end-start)
+            distanceTraveled = math.sqrt((my_msg.position_x - startingPose.x)**2 + (my_msg.position_y - startingPose.y)**2)
+            avgspeed = distanceTraveled/duration
+            print("duration is ",duration," distance is ",distanceTraveled," avg speed ",avgspeed)
+    tmp = status
 
-set the parameter for frequency of publishing information
-
-initialize total_distance and total_time to zero
-initialize last_publish_time to the current time
-
-spin the node
+def main():
+    rospy.init_node("subscriber")
+    odomSub = rospy.Subscriber("/position_and_velocity",my_message,callback1,queue_size=1000)
+    goalSub = rospy.Subscriber("/reaching_goal/goal",PlanningActionGoal,callback2,queue_size=1000)
+    statusSub = rospy.Subscriber("/reaching_goal/status",GoalStatusArray,callback,queue_size=1000)
+    rospy.loginfo("starting the loop")
+    rospy.spin()
+        
+if __name__ == "__main__":
+    main()
 ``` 
 ##### Launch File
-It provide a convenient way to start up multiple nodes and a master, as well as other initialization requirements such as setting parameters.
+It provides a convenient way to start up multiple nodes and a master, as well as other initialization requirements such as setting parameters.
+I didnt create a launch file for my package, I just added the nodes to the launch file of the /assignment_2_2022, except the first node that contains a user interface it should be run alone.
+``` 
+?xml version="1.0"?>
+<launch>
+    <include file="$(find assignment_2_2022)/launch/sim_w1.launch" />
+    <param name="des_pos_x" value= "0.0" />
+    <param name="des_pos_y" value= "1.0" />
+    <node pkg="assignment_2_2022" type="wall_follow_service.py" name="wall_follower" />
+    <node pkg="assignment_2_2022" type="go_to_point_service.py" name="go_to_point"  />
+    <node pkg="assignment_2_2022" type="bug_as.py" name="bug_action_service" output="screen" />
+    
+    <node pkg="assignmentPackage" type="node_A2.py" name="node_A2" output="screen" />
+    <node pkg="assignmentPackage" type="node_B.py" name="node_B" output="screen" />
+    <node pkg="assignmentPackage" type="node_C.py" name="node_C" output="screen" />
+</launch>
+``` 
+To run the project, we excute the following :
+```  roslaunch assignment_2_2022 assignment1.launch
+
+
