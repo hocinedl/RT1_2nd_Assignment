@@ -5,7 +5,7 @@ RT1_Assignment #2
 <br>2- A node that publishes the robot's position and velocity as a custom message using values from the topic ``` python /odom ``` (node_A2)</br>
 <br>3- A service node that, when activated, prints the number of goals that have been reached and cancelled.(node_B)</br>
 <br>4- A node that subscribes to the robot's position and velocity using the custom message and prints the distance of the robot from the target and the robot's average speed. A parameter will be used to set the frequency of publishing the information. (node_C).</br>
-<br>5- And to start the entire simulation, I created the launch file that launches multiple ROS nodes and set their parameters.</br>
+<br>5- And to start the entire simulation, I added to the launch file of the package assignment_2_2022 my nodes so that everything is launched at a time. </br>
 
 # Nodes:
 
@@ -66,14 +66,14 @@ if this is the main module
     create a subscriber that subscribes to the topic "/odom" 
     loop to run the node.
  
-  ``` 
-
- 
+  ```  
 
 #### The service node (node_B):
 It is a node that subscribes to the '/reaching_goal/result_callback' topic and counts the number of goals that have been either reached or canceled. It also defines a ROS service server that returns the number of goals that have been canceled and reached so far. The global variables count_canceled and count_reached are updated in the callback function for the subscriber and are used to respond to the service request. Finally, the node is initialized and set to spin to handle callbacks.
 The Flowchart of the node is : 
 ![Flowchart for node B](Flowchart2.png)
+A result of this node is the following:
+![Result of running node B](Screenshot from 2023-02-16 20-31-02.png)
 
 #### The Subscriber node:
 
