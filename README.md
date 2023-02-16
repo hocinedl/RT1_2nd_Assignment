@@ -149,5 +149,4 @@ I didnt create a launch file for my package, I just added the nodes to the launc
 ``` 
 To run the project, we excute the following :
 ```  roslaunch assignment_2_2022 assignment1.launch
-
-
+``` 
