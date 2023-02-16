@@ -1,0 +1,8 @@
+prefix=/root/assignmentWs/install
+
+Name: assignment_2_2022
+Description: Description of assignment_2_2022
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,3 @@
+---
+int32 count_canceled
+int32 count_reached
