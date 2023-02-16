@@ -27,7 +27,7 @@ def callback2_srv(req):
 if __name__ == "__main__":
     rospy.init_node('node_B') # initializing the node.
     # subscribing to the topic /reaching goal/result callback..
-    sub = rospy.Subscriber('/reaching_goal/result_callback', assignment_2_2022.msg.PlanningActionResult, callback1_sub)
+    sub = rospy.Subscriber('/reaching_goal/result', assignment_2_2022.msg.PlanningActionResult, callback1_sub)
     # creating a service server.
     srv = rospy.Service('statuofgoal', my_service, callback2_srv) 
     rospy.spin() # spin to handle callbacks

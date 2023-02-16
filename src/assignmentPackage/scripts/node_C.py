@@ -1,50 +1,49 @@
-#! /usr/bin/env python3
+#! /usr/local/bin/python
 
-import rospy
-import assignment_2_2022.msg
-import math
-import nav_msgs.msg
-import actionlib
+from __future__ import print_function
+import rospy,math,time
 
-from assignmentPackage.msg import my_msg
+from assignment_2_2022.msg import PlanningActionGoal,PlanningGoal
+from actionlib_msgs.msg import GoalStatusArray
+from assignmentPackage.msg import my_msg as my_message
+from geometry_msgs.msg import Point
 
-#declaring variables..
-dis = 0.0
-vel = 0.0
-init_time = 0.0
-final_time = 0.0
+goal = PlanningGoal()
+my_msg = my_message()
+status = 0
+tmp = 0
+start = 0
+startingPose = Point()
 
-def callback1(data):
-    global init_time, dis
-    # get the desired 'x' and 'y' positions
-    position_x = rospy.get_param("/des_pos_x")
-    position_y = rospy.get_param("/des_pos_y")
+def DOCallback(msg):
+    global my_msg
+    my_msg = msg
+def GoalCallback(msg):
+    global goal,startingPose,start
+    goal = msg.goal
+    startingPose.x = my_msg.position_x
+    startingPose.y = my_msg.position_y
+    start = time.perf_counter()
+def SCallback(msg):
+    global status,tmp,end,startingPose
+    if (len(msg.status_list)>0):
+        status= msg.status_list[0].status
+    if(status==3):
+        if status !=tmp:
+            end = time.perf_counter()
+            duration = (end-start)#/1000.0
+            distanceTraveled = math.sqrt((my_msg.position_x - startingPose.x)**2 + (my_msg.position_y - startingPose.y)**2)
+            avgspeed = distanceTraveled/duration
+            print("duration is ",duration," distance is ",distanceTraveled," avg speed ",avgspeed)
+    tmp = status
 
-    # current 'x' and 'y' positions
-    x = data.position_x
-    y = data.position_y
-    init_time = rospy.Time.now() # get the time at the current time
-	
-    # compute the distance to the goal 
-    x_dist = position_x - x
-    y_dist = position_y - y
-    dis = math.sqrt((x_dist ** 2) + (y_dist ** 2))
-
-
-def callback2(data):
-    global final_time, init_time, dis, vel
-    if (data.status.status == 3): # when the robot reaches the goal
-        final_time = rospy.Time.now() # get the time 
-        # compute the current velocity
-        time = (final_time - init_time).to_sec()
-        vel = dis / time # compute the velocity
-    print(f"The distance to the goal is {dis} \nThe average speed of the robot is {vel}")
-
-
-if __name__ == "__main__":
-    rospy.init_node("node_C") # initialize the node
-    # subscribing to the topic position & vel which we are publishing to in node A2.
-    rospy.Subscriber("position_and_vel", my_msg, callback1)
-    # subscribing to the topic /reaching_goal
-    rospy.Subscriber('/reaching_goal/result', assignment_2_2022.msg.PlanningActionResult, callback2)
+def main():
+    rospy.init_node("subscriber_python")
+    odomSub = rospy.Subscriber("/position_and_velocity",my_message,DOCallback,queue_size=1000)
+    goalSub = rospy.Subscriber("/reaching_goal/goal",PlanningActionGoal,GoalCallback,queue_size=1000)
+    statusSub = rospy.Subscriber("/reaching_goal/status",GoalStatusArray,SCallback,queue_size=1000)
+    rospy.loginfo("starting the loop")
     rospy.spin()
+        
+if __name__ == "__main__":
+    main()
