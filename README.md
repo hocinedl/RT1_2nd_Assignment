@@ -151,4 +151,8 @@ To run the project, we excute the following :
 ```
 roslaunch assignment_2_2022 assignment1.launch
 
+and to run nodeA:
+
+rosrun assignmentPackage node_A1.py
+
 ``` 
