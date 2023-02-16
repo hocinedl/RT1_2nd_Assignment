@@ -73,7 +73,7 @@ It is a node that subscribes to the '/reaching_goal/result_callback' topic and c
 The Flowchart of the node is : 
 ![Flowchart for node B](Flowchart2.png)
 A result of this node is the following:
-![Result of running node B](Screenshot from 2023-02-16 20-31-02.png)
+![Result of running node B](nodeBrun.png)
 
 #### The Subscriber node:
 
