@@ -2,7 +2,7 @@ RT1_Assignment #2
 =================
 <br>This repository contains my solution for the second assignment of RT1 in which we were asked to create ROS nodes to perform specific tasks as follows (all the nodes were coded in python):</br> 
 <br>1- The first ROS node allows a user to input a target position for a robot to navigate to and he can also cancel the operation and stop the robot an reassign new target distination, it was implemented using an action client (node_A1) </br>
-<br>2- A node that publishes the robot's position and velocity as a custom message using values from the topic ``` python /odom ``` (node_A2)</br>
+<br>2- A node that publishes the robot's position and velocity as a custom message using values from the topic ```  /odom ``` (node_A2)</br>
 <br>3- A service node that, when activated, prints the number of goals that have been reached and cancelled.(node_B)</br>
 <br>4- A node that subscribes to the robot's position and velocity using the custom message and prints the distance of the robot from the target and the robot's average speed. A parameter will be used to set the frequency of publishing the information. (node_C).</br>
 <br>5- And to start the entire simulation, I added to the launch file of the package assignment_2_2022 my nodes so that everything is launched at a time. </br>
