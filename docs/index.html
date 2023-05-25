@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Welcome to Assignment’s documentation! &#8212; Assignment  0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="welcome-to-assignment-s-documentation">
+<h1>Welcome to Assignment’s documentation!<a class="headerlink" href="#welcome-to-assignment-s-documentation" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<section id="assignment-documentation">
+<h2>Assignment documentation!<a class="headerlink" href="#assignment-documentation" title="Permalink to this heading">¶</a></h2>
+<p>This is the documentation of the assignment_pkg package!</p>
+</section>
+</section>
+<section id="module-scripts.node_A1">
+<span id="action-client-node-module"></span><h1>Action client node Module<a class="headerlink" href="#module-scripts.node_A1" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-node_A1"></span><p>This node allows a user to input a target position for a robot to navigate to and he can also cancel the operation and stop the robot an reassign new target distination,
+it was implemented using an action client.</p>
+<dl class="simple">
+<dt>Functions:</dt><dd><ul class="simple">
+<li><p><cite>cancel()</cite>: Cancels the target and publishes the cancellation event.</p></li>
+<li><p><cite>target()</cite>: Sends the robot to the target position.</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><ul class="simple">
+<li><p>User can choose to send a target position or cancel an existing target.</p></li>
+<li><p>User interface prompts for input and executes the corresponding function.</p></li>
+</ul>
+</dd>
+</dl>
+<p>—</p>
+<dl class="simple">
+<dt>Global Variables:</dt><dd><dl class="simple">
+<dt>client<span class="classifier">actionlib.SimpleActionClient</span></dt><dd><p>An instance of the action client connecting to the ‘/reaching_goal’ topic.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_A1.cancel">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_A1.</span></span><span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_A1.html#cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_A1.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions is called if the user choose to cancel the target, and it cancel the goal for the action client <em>client</em>
+Also it publishes the goal cancelation event.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_A1.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_A1.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_A1.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_A1.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is our user interface function. A simple user interface the asks to choose between two options eIther sending the robot to a target or canceling the target, depending on the choice of the user the program will excute either <strong>cancel()</strong> or <strong>target()</strong> functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_A1.target">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_A1.</span></span><span class="sig-name descname"><span class="pre">target</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_A1.html#target"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_A1.target" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions is called if the user choose a target position to reach, after the user interface if the user types 1 which means that he wants to send a target this functions is excutes, it starts by asking the user to enter the desired x and y positions, then it define a goal which in our case is called <em>goal</em>. it sets the goals positions (x and y) to the one entered by the user and finally it sends the goal.</p>
+</dd></dl>
+
+<img alt="Flowchart of the first node" class="align-center" src="_images/Flowchart.png" />
+</section>
+<section id="module-scripts.node_A2">
+<span id="publisher-node-a2-module"></span><h1>Publisher node_A2 Module<a class="headerlink" href="#module-scripts.node_A2" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-node_A2"></span><p>It is a node that publishes the robot’s current position and velocity as a custom message by subscribing to the /odom topic.</p>
+<p>Functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>subscriber_callback(data)</cite>: Callback function executed when a message is received on the <cite>/odom</cite> topic.</p></li>
+</ul>
+</div></blockquote>
+<p>Usage:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The <cite>subscriber_callback</cite> function creates a custom message of type <cite>my_msg</cite> and fills it with the current position and velocity obtained from the received data.</p></li>
+<li><p>The message is then published on the <cite>position_and_velocity</cite> topic, and the received data is logged.</p></li>
+<li><p>To run the node, initialize the ROS node with the name <cite>node_A2</cite> and let it subscribe to the <cite>/odom</cite> topic.</p></li>
+</ul>
+</div></blockquote>
+<p>Subscribes to:</p>
+<ul class="simple">
+<li><p><strong>/odom</strong> (message type: <cite>nav_msgs/Odometry</cite>)</p></li>
+</ul>
+<dl class="simple">
+<dt>Topics Published:</dt><dd><ul class="simple">
+<li><p><strong>position_and_velocity</strong>: The node publishes the custom message <cite>my_msg</cite> on this topic.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_A2.subscriber_callback">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_A2.</span></span><span class="sig-name descname"><span class="pre">subscriber_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_A2.html#subscriber_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_A2.subscriber_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Callback function executed when a message is received on the “/odom” topic.</em></p>
+<p>It creates a custom message of type <cite>my_msg</cite> and fills it with the current positions and velocities obtained from the received data.
+Then, it logs the received data, declares a publisher that publishes the custom message on the “position_and_velocity” topic,
+publishes the message, and prints “Message published!” to the console.</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.node_B">
+<span id="the-service-node-module"></span><h1>The service node Module<a class="headerlink" href="#module-scripts.node_B" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-node_B"></span><p>This node subscribes to the <cite>/reaching_goal/result</cite> topic to monitor the status of goals and provides a service called <cite>statuofgoal</cite> to retrieve the number of reached and canceled goals.</p>
+<dl class="simple">
+<dt>Subscribes to:</dt><dd><ul class="simple">
+<li><p><strong>/reaching_goal/result</strong>: Topic to receive status updates on goals.</p></li>
+</ul>
+</dd>
+<dt>Service:</dt><dd><ul class="simple">
+<li><p><strong>statuofgoal</strong>: Service to retrieve the number of reached and canceled goals.</p></li>
+</ul>
+</dd>
+<dt>Functions:</dt><dd><ul class="simple">
+<li><p><cite>callback1_sub(msg)</cite>: Callback function executed when a message is received on the <cite>/reaching_goal/result_callback</cite> topic.</p></li>
+<li><p><cite>callback2_srv(req)</cite>: Callback function for the <cite>statuofgoal</cite> service.</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><ul class="simple">
+<li><p>Run the node and it will subscribe to the <cite>/reaching_goal/result_callback</cite> topic and provide the <cite>statuofgoal</cite> service.</p></li>
+<li><p>The <cite>callback1_sub</cite> function counts the number of canceled and reached goals based on the received status updates.</p></li>
+<li><p>The <cite>callback2_srv</cite> function responds to the <cite>statuofgoal</cite> service request by printing the number of canceled and reached goals and returning the response.</p></li>
+</ul>
+</dd>
+<dt>Variables:</dt><dd><dl class="simple">
+<dt>count_canceled<span class="classifier">int</span></dt><dd><p>Count of canceled goals.</p>
+</dd>
+<dt>count_reached<span class="classifier">int</span></dt><dd><p>Count of reached goals.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_B.callback1_sub">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_B.</span></span><span class="sig-name descname"><span class="pre">callback1_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_B.html#callback1_sub"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_B.callback1_sub" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Callback function that checks the state of the goal (reached or canceled) and increments the corresponding count.</em></p>
+<blockquote>
+<div><dl class="simple">
+<dt>Args:</dt><dd><p>msg: Received message containing the status of the goal.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_B.callback2_srv">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_B.</span></span><span class="sig-name descname"><span class="pre">callback2_srv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_B.html#callback2_srv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_B.callback2_srv" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Callback function for the “statuofgoal” service.</em></p>
+<p>It prints the number of canceled and reached goals and returns the response.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Args:</dt><dd><p>req: Service request object.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Service response object.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<img alt="Flowchart of the second node" class="align-center" src="_images/FlowchartB.png" />
+</section>
+<section id="module-scripts.node_C">
+<span id="subscriber-node-module"></span><h1>Subscriber node Module<a class="headerlink" href="#module-scripts.node_C" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-node_C"></span><p>Python module for the Subscriber node (node_C).</p>
+<p>This node subscribes to the robot position and velocity using a custom message and prints the distance of the robot from the target and the robot’s average speed after reaching the goal.</p>
+<p>Subscribes to:</p>
+<ul class="simple">
+<li><p><strong>/position_and_velocity</strong> (message type: <cite>my_msg</cite>)</p></li>
+<li><p><strong>/reaching_goal/goal</strong> (message type: <cite>PlanningActionGoal</cite>)</p></li>
+<li><p><strong>/reaching_goal/status</strong> (message type: <cite>GoalStatusArray</cite>)</p></li>
+</ul>
+<p>—</p>
+<dl class="simple">
+<dt>Global Variables:</dt><dd><dl class="simple">
+<dt>goal<span class="classifier">PlanningGoal</span></dt><dd><p>The goal of the robot obtained from the “/reaching_goal/goal” topic.</p>
+</dd>
+<dt>my_msg<span class="classifier">my_message</span></dt><dd><p>The robot’s position and velocity obtained from the “/position_and_velocity” topic.</p>
+</dd>
+<dt>status<span class="classifier">int</span></dt><dd><p>The status of the robot’s goal obtained from the “/reaching_goal/status” topic.</p>
+</dd>
+<dt>tmp<span class="classifier">int</span></dt><dd><p>Temporary variable to store the previous status for comparison.</p>
+</dd>
+<dt>start<span class="classifier">float</span></dt><dd><p>Start time to calculate the duration.</p>
+</dd>
+<dt>startingPose<span class="classifier">geometry_msgs.Point</span></dt><dd><p>Starting pose of the robot used in distance and speed calculations.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_C.callback">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_C.</span></span><span class="sig-name descname"><span class="pre">callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_C.html#callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_C.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function that calculates the distance traveled by the robot as well as the average speed and the duration,
+it also prints those information.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_C.callback1">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_C.</span></span><span class="sig-name descname"><span class="pre">callback1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_C.html#callback1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_C.callback1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function that updates the global variable <cite>my_msg</cite> with the received message of type <cite>my_message</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_C.callback2">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_C.</span></span><span class="sig-name descname"><span class="pre">callback2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_C.html#callback2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_C.callback2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback function that finds the starting pose of the robot, which is used in distance and speed calculations.
+It updates the global variables <cite>goal</cite>, <cite>startingPose</cite>, and <cite>start</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_C.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_C.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_C.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_C.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main function that initializes the ROS node and declares the subscribers for the following topics:</p>
+<ul class="simple">
+<li><p>“/position_and_velocity” (message type: <cite>my_message</cite>)</p></li>
+<li><p>“/reaching_goal/goal” (message type: <cite>PlanningActionGoal</cite>)</p></li>
+<li><p>“/reaching_goal/status” (message type: <cite>GoalStatusArray</cite>)</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Assignment </a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Hocine DELALA.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
